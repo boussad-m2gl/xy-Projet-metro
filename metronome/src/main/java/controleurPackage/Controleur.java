@@ -43,7 +43,7 @@ public class Controleur  implements GestionnaireEvtMM , GestionnaireIHM , Subjec
 		  Click clickCmd = new Click(moteur);
           horl.activerPeriodiquement(clickCmd,(float) 1000/(tempo/60));	// calculer le periode en ms
           
-          // Ajouter
+          // Ajouter  les observateurs de ce controlleur
           
           register((MMImpl)moteur); register((Horloge)horl);
           

@@ -17,9 +17,9 @@ public class MMImpl   implements MM, Observer {
 	
 	private MarquerTemps markT;
 	private MarquerMesure markM;
-	
 	private int mesurecounter= 1 ; 
-    private int tempParMesure = 4;
+    
+	private int tempParMesure = 4;
     private boolean enMarche=true;
     
     
