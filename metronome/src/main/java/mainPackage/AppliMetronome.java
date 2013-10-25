@@ -25,7 +25,7 @@ public class AppliMetronome {
 		 System.out.println(" Lancement du metronome ..... ");
 		 
 		 Controleur controleur = new Controleur();
-		 controleur.StartConfiguration(120);
+		 controleur.startConfiguration(120);
 	     controleur.start();		 
 	     //IIHM  ihm = new IHM();
 	 }

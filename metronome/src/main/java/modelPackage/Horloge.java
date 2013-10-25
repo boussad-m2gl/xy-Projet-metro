@@ -11,14 +11,14 @@ import controleurPackage.GestionnaireIHM;
 
 public class Horloge  implements IHorloge, Observer {
 	
-    private GestionnaireEvtMM controlleur;  // l'horloge connait son controlleur tous comme le moteur
+    private GestionnaireEvtMM controleur;  // l'horloge connait son controlleur tous comme le moteur
 	private Command clickC;
     private long periodActiveCmd;
 	private Timer timer;
 	
 	public Horloge(GestionnaireEvtMM controlleur){
 		
-	  this.controlleur = controlleur;
+	  this.controleur = controlleur;
 	  timer = new Timer();   
 	}
 	
@@ -55,6 +55,16 @@ public class Horloge  implements IHorloge, Observer {
      * */
 	public void activerApresDelais(Command cmd, float delaisEnSecond) {
 		
+		
+		timer.cancel();
+		timer.schedule(new TimerTask() {
+
+             @Override
+             public void run() {
+                 clickC.executer();
+             }
+         },  (long) delaisEnSecond);
+		
 	}
 
 	public void desactiver(Command cmd) {
@@ -67,7 +77,7 @@ public class Horloge  implements IHorloge, Observer {
      * */
 	public void update() {
 		
-		periodActiveCmd = 1000/(controlleur.getTempo()/60); 
+		periodActiveCmd = 1000/(controleur.getTempo()/60); 
 		timer.cancel();
 		timer.schedule(new TimerTask() {
 
