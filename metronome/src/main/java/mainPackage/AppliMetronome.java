@@ -1,14 +1,6 @@
 package mainPackage;
 
 
-
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-import presentation.IHM;
-import presentation.IIHM;
-import model.Horloge;
 import controleur.Controleur;
 
 /**
@@ -19,12 +11,13 @@ import controleur.Controleur;
  * */
 public class AppliMetronome {
  	
-	 public static void main(String args[]) throws InterruptedException{
+	
+	 public static void main(String args[]) throws InterruptedException {
 		 
 		 System.out.println(" Lancement du metronome ..... ");
-		 
 		 Controleur controleur = new Controleur();
-		 controleur.startConfiguration(120);
-		// controleur.start();	    
+		 controleur.startConfiguration(60);
+		 // controleur.start();	    
 	 }
+	 
 }

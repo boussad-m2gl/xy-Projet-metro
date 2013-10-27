@@ -84,7 +84,6 @@ public class MMImpl implements MM, Observer {
 	public void update() {
 		tempParMesure = controlleur.getTempParmesure();
 		mesurecounter =1;
-        System.out.println("MMImpl :update TParMesure ="+tempParMesure);
 	}
 
 }

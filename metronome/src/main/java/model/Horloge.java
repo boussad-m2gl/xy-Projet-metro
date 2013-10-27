@@ -21,6 +21,7 @@ public class Horloge  implements IHorloge, Observer {
 	
 	public Horloge(GestionnaireEvtMM controlleur){
 	  this.controleur = controlleur;
+	  timer = new Timer();
 	}
 	
 	
@@ -85,7 +86,7 @@ public class Horloge  implements IHorloge, Observer {
      * */
 	public void update() {
 		stopChrono();
-		periodActiveCmd = 1000/(controleur.getTempo()/60); 
+		periodActiveCmd =   (long) ((new Double(1000))/(new Double(controleur.getTempo())/60)); 
 		startChrono();	
 	}
 

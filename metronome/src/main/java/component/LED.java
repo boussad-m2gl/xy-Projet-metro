@@ -3,17 +3,16 @@ package component;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import org.jfugue.Player;
 
 public class LED extends JPanel {
 
-    private Color couleur;	
+    private Color  couleur;	
+    private Player player;
+   
+    
 	public LED() {
-		
 		setBackground(Color.black);
         setPreferredSize(new Dimension(100,100));
         setOpaque(true);
@@ -29,15 +28,15 @@ public class LED extends JPanel {
 	}
 
 	public void flasher() {
-			setVisible(true);
+			setVisible(true);		
 	}
+	
 	@Override
-	public void paint(Graphics g) {
-        
+	public void paint(Graphics g){
+		
 		   super.paintComponent(g);
-		   g.setColor( couleur);
-		   g.fillRect(10, 10, 80, 80);
-		  
-	    }
+		   g.setColor(couleur);
+		   g.fillRect(10, 10, 80, 80); 
+	}
 
 }

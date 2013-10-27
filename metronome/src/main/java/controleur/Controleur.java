@@ -25,9 +25,12 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	private Command cmdTemps;
 	private Command cmdMesure;
 	private long tempo = 120;
+	private long maxTempo = 120;
+	private long minTempo = 60; 
 	private int tempParMesure;
 	private IHorloge horl;
 	private final int MaxTParMesure = 7;
+	private boolean metroActive =false;
 
 	Collection<Observer> obsControlleur = new ArrayList<Observer>();
 
@@ -61,17 +64,19 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	 * Increment le temps par mesure dans la limite de [1.. MaxTParMesure=7]
 	 * */
 	public void inc() {
+		if( ! metroActive)  return;
 		tempParMesure = moteur.getNbTempsParMesure();
 		tempParMesure = ((tempParMesure) % (MaxTParMesure))  + 1;
 		ihm.setCurrentTempParM(tempParMesure);
 		notifyObservers();
-		//moteur.setNbTempsParMesure(tempParMesure);
+		
 	}
 
 	/**
 	 * Increment le temps par mesure dans la limite de [1.. MaxTParMesure=7]
 	 * */
 	public void dec() {
+		if( ! metroActive)  return;
 		tempParMesure = moteur.getNbTempsParMesure();
 		tempParMesure = tempParMesure -1 ;
 		if(tempParMesure == 0) { tempParMesure =1;}
@@ -84,7 +89,9 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	 * Demarer le metronome
 	 * */
 	public void start() {
+		if( metroActive)  return;
 		horl.startChrono();
+		metroActive =true;
 	}
 
 	/**
@@ -92,16 +99,19 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	 * 
 	 * */
 	public void stop() {
+		if( ! metroActive)  return;
 		horl.stopChrono();
+		metroActive =false;
 	}
 
 	public int getTempParmesure() {
 		return tempParMesure;
 	}
 
-	public void updateMolette(Integer x) {
-		// TODO Auto-generated method stub
-
+	public void updateMolette(double x) {
+		if( ! metroActive)  return;
+		tempo = (long) ((maxTempo-minTempo)*x + minTempo);
+		notifyObservers();
 	}
 
 	public void updateTempo(Integer temp) {

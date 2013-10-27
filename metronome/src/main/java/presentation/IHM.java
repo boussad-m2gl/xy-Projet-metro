@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Hashtable;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +22,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import org.jfugue.Player;
 
 import observer.Observer;
 import observer.Subject;
@@ -46,6 +50,7 @@ public class IHM implements IIHM{
 	// JLabel led2;
 
 	LED led1, led2;
+	Player player1, player2;
 	
 	//Un slider pour le tempo
 
@@ -84,6 +89,9 @@ public class IHM implements IIHM{
      private Command incrCmd, decrCmd, startCmd, stopCmd;
      private GestionnaireIHM controler;
      
+     private Collection <Observer> obsList = new ArrayList<Observer>();
+     
+     
 	 public IHM(GestionnaireIHM cont) {
          
 		controler = cont;
@@ -94,6 +102,8 @@ public class IHM implements IIHM{
 		
 		led1 = new LED(); led1.setColor(Color.orange);
 		led2 = new LED(); led2.setColor(Color.red);
+		player1 = new Player();
+		player2 = new Player();
 		
 		cmdEteindreLed1 = new Eteindre(led1);
 		cmdEtiendreLed2 = new Eteindre(led2);
@@ -110,23 +120,38 @@ public class IHM implements IIHM{
 		                   Declaration du slider qui pour changer le tempo
 		*************************************************************/
 
-		    slider = new JSlider(JSlider.HORIZONTAL,0,500,0);//direction , min , max , current
-	        slider.setFont(new Font("Tahoma",Font.BOLD,12));
-	        slider.setMajorTickSpacing(100);
-	        slider.setMinorTickSpacing(25);
+		    slider = new JSlider(JSlider.HORIZONTAL,0,10,10);//direction , min , max , current
+	         
+        
+            slider.setFont(new Font("Tahoma",Font.BOLD,12));
+	        slider.setMajorTickSpacing(2);
+	        slider.setMinorTickSpacing(1);
+     
+	      
+			Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+	        labelTable.put( new Integer( 0 ), new JLabel("0.0") );
+	        labelTable.put( new Integer( 2 ), new JLabel("0.2") );
+	        labelTable.put( new Integer( 4 ), new JLabel("0.4") );
+	        labelTable.put( new Integer( 6 ), new JLabel("0.6") );
+	        labelTable.put( new Integer( 8 ), new JLabel("0.8") );
+	        labelTable.put( new Integer( 10 ), new JLabel("1.0") );
+	        
+	        slider.setLabelTable( labelTable);
 	        slider.setPaintLabels(true);
 	        slider.setPaintTicks(true);
 	        slider.setPaintTrack(true);
 	        slider.setAutoscrolls(true);
 	        slider.setPreferredSize(new Dimension(250,250));
 	       
-	        lbl1 = new JLabel("Tempo (ms)");
+	        lbl1 = new JLabel("position");
 	        txt = new JTextField(4);
 		
 	        
 	        slider.addChangeListener(new ChangeListener() {
 	            public void stateChanged(ChangeEvent e) {
-	                txt.setText(String.valueOf(slider.getValue()));
+	                txt.setText(String.valueOf(slider.getValue()*0.1));
+	                //TODO  : remplacer par le patron de conception observer
+	                controler.updateMolette(slider.getValue()*0.1);
 	            }
 	        });
 	        
@@ -200,7 +225,10 @@ public class IHM implements IIHM{
 						}
 					}
 		    );
-		// config finales 
+		   
+		   
+		   
+		// configurations finales 
 	    panLed  = new JPanel(); panLed.setLayout( new BorderLayout());
 		panLed.add(led1, BorderLayout.NORTH); 
 		panLed.add(led2, BorderLayout.SOUTH);
@@ -237,13 +265,17 @@ public class IHM implements IIHM{
 
 		switch (idLed) {
 		case 1: {
-			led1.setVisible(true); hcmd.activerApresDelais(cmdEteindreLed1, 200);
+			led1.setVisible(true);
+			hcmd.activerApresDelais(cmdEteindreLed1, 200);
+			//player1.play("A");
 		}
 			;
 			break;
 
 		case 2: {
-			led2.setVisible(true);  hcmd.activerApresDelais(cmdEtiendreLed2, 200);
+			led2.setVisible(true);  
+			hcmd.activerApresDelais(cmdEtiendreLed2, 200);
+			//player2.play("B");
 		}
 			;
 			break;
@@ -254,7 +286,6 @@ public class IHM implements IIHM{
 
 	public void eteindreLed() {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
