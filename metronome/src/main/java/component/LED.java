@@ -1,6 +1,9 @@
 package component;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -8,25 +11,33 @@ import javax.swing.border.EmptyBorder;
 
 public class LED extends JPanel {
 
-	private JPanel lumiere;
-
+    private Color couleur;	
 	public LED() {
-		lumiere = new JPanel();
-		lumiere.setBorder(new EmptyBorder(10, 20, 10, 20));
-
-		// TODO : TEST COLOR
-		//this.setBackground(Color.red);
-		lumiere.setBackground(Color.red);
-
-		this.add(lumiere);
+		
+		setBackground(Color.black);
+        setPreferredSize(new Dimension(100,100));
+        setOpaque(true);
 	}
 
+	public void setColor(Color col){
+		   couleur = col;
+		   //repaint();
+	}
+	
 	public void eteindre() {
-		lumiere.setVisible(false);
+			setVisible(false);
 	}
 
 	public void flasher() {
-		lumiere.setVisible(true);
+			setVisible(true);
 	}
+	@Override
+	public void paint(Graphics g) {
+        
+		   super.paintComponent(g);
+		   g.setColor( couleur);
+		   g.fillRect(10, 10, 80, 80);
+		  
+	    }
 
 }
