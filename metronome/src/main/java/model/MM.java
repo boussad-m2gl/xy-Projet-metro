@@ -12,10 +12,10 @@ import controleur.GestionnaireEvtMM;
 
 public interface MM {
    
-	// getTempo(): tempo ;
-	// public  setTempo(t: tempo);
+	public long getTempo();
+	public void setTempo(float tempo);
 	public int  getNbTempsParMesure();
-	public void  setNbTempsParMesure(Integer n);
+	public void setNbTempsParMesure(Integer n);
 	public void setEnMarche( boolean x);
 	public boolean  getEnMarche();
 	public void setGestionnaireEvtMM (GestionnaireEvtMM MM);

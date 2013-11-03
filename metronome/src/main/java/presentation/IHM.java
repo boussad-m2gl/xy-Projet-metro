@@ -77,14 +77,12 @@ public class IHM implements IIHM , Observer{
      private Command incrCmd, decrCmd, startCmd, stopCmd;
      private GestionnaireIHM controler;
      
-     private Collection <Observer> obsList = new ArrayList<Observer>();
-     
-     
+    
 	 public IHM(GestionnaireIHM cont) {
          
 		controler = cont;
 		 
-		frame = new JFrame("Metronome ");
+		frame = new JFrame("Metronome -V1 ");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		
@@ -131,7 +129,7 @@ public class IHM implements IIHM , Observer{
 	       
 	        afficheurTempoLab = new JLabel("  AFFICHEUR TEMPO ");
 	        afficheurTempo = new JTextField(7);
-		
+	        afficheurTempo.setText(String.valueOf(Config.MaxTempo));
 	        
 	        molette.addChangeListener(new ChangeListener() {
 	            public void stateChanged(ChangeEvent e) {
@@ -153,7 +151,7 @@ public class IHM implements IIHM , Observer{
                        Declaration du temp par mesure 
            *************************************************************/
 	      
-			labTmpParMesure = new JLabel("   Temp Par Mesure ");
+			labTmpParMesure = new JLabel("   TEMP PAR MESURE ");
 			panTMesure = new JPanel(); panTMesure.setLayout(new BorderLayout());
 			panTMesure.add(labTmpParMesure, BorderLayout.NORTH);
 			panTMesure.add(buttonInc,BorderLayout.WEST );
@@ -271,8 +269,7 @@ public class IHM implements IIHM , Observer{
 	}
 	
 	public void update(){
-		afficheurTempo.setText(String.valueOf(controler.getTempo()));
-		
+		  afficheurTempo.setText(String.valueOf(controler.getTempo()));
 	}
 
 }

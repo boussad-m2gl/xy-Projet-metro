@@ -1,6 +1,7 @@
 package model;
 
 import observer.Observer;
+import presentation.Config;
 import command.Command;
 import command.MarquerMesure;
 import command.MarquerTemps;
@@ -18,8 +19,13 @@ public class MMImpl implements MM, Observer {
 	private MarquerMesure markM;
 	private int mesurecounter = 1;
 	private int tempParMesure=1;
-	private boolean enMarche = true;
-
+	private boolean enMarche = false;
+    // Tempo
+	private long maxTempo = Config.MaxTempo;
+	private long minTempo = Config.MinTempo; 
+	private long currentTempo = maxTempo;
+	
+	
 	public MMImpl(GestionnaireEvtMM controlleur) {
 		this.controlleur = controlleur;
 	}
@@ -84,5 +90,17 @@ public class MMImpl implements MM, Observer {
 		tempParMesure = controlleur.getTempParmesure();
 		mesurecounter =1;
 	}
+
+	public long getTempo() {
+		return currentTempo;
+	}
+
+	public void setTempo(float modeletValue) {
+
+		currentTempo = (long) ((maxTempo-minTempo)* modeletValue + minTempo);
+		controlleur.updateTempo(currentTempo);
+	}
+
+	
 
 }

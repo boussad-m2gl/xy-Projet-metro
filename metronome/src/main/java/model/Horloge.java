@@ -13,14 +13,14 @@ public class Horloge  implements IHorloge, Observer{
 	private Command clickC;
     private long periodActiveCmd;
 	private Timer timer;   // timer pour la commande marquer temps
-	private Timer timer2 = new Timer();  // timer pour eteindre led1
-	private Timer timer3 = new Timer();  // timer pour eteindre led2
+	//private Timer timer2 = new Timer();  // timer pour commander led1 et led2
+	
 	
 	
 	
 	public Horloge(GestionnaireEvtMM controlleur){
-	  this.controleur = controlleur;
-	  timer = new Timer();
+	       this.controleur = controlleur;
+	       timer = new Timer();
 	}
 	
 	
@@ -64,7 +64,7 @@ public class Horloge  implements IHorloge, Observer{
 		
 		final Command cmtToExecute = cmd;
 		
-			timer2.schedule(new TimerTask() {
+			timer.schedule(new TimerTask() {
 	
 	             @Override
 	             public void run() {
@@ -75,7 +75,7 @@ public class Horloge  implements IHorloge, Observer{
 	}
 
 	public void desactiver(Command cmd) {
-		 stopChrono();	
+		 stopChrono(); // TODO  how to stop a given task within the timer !  
 	}
 
     /**
