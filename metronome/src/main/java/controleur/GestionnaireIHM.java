@@ -8,5 +8,6 @@ public interface GestionnaireIHM {
 	public void stop();
 	public void inc();
 	public void dec();
+	public long getTempo();
 	
 }

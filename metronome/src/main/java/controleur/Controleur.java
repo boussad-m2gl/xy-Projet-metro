@@ -10,6 +10,7 @@ import model.Horloge;
 import model.IHorloge;
 import model.MM;
 import model.MMImpl;
+import presentation.Config;
 import presentation.IHM;
 import presentation.IIHM;
 
@@ -22,20 +23,23 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 
 	private MM moteur;
 	private IIHM ihm;
+	private IHorloge horl;
 	private Command cmdTemps;
 	private Command cmdMesure;
-	private long tempo = 120;
-	private long maxTempo = 120;
-	private long minTempo = 60; 
-	private int tempParMesure;
-	private IHorloge horl;
-	private final int MaxTParMesure = 7;
+	private long maxTempo = Config.MaxTempo;
+	private long minTempo = Config.MinTempo; 
+	private int maxTParM = Config.MaxTempParMesure;
+	private int minTParM = Config.MinTempParMesure;
+	private long currentTempo = maxTempo;
+	private int currentTParM=minTParM;
 	private boolean metroActive =false;
 
 	Collection<Observer> obsControlleur = new ArrayList<Observer>();
 
-	/** At configuration time: sequence digramme after command */
-	public void startConfiguration(long tempo) {
+	private final int INC =1;
+	private final int DEC =2;
+	
+	public Controleur() {
 
 		cmdTemps = new MarquerTemps(this);
 		cmdMesure = new MarquerMesure(this);
@@ -43,20 +47,16 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 		moteur = new MMImpl(this);
 		moteur.setMarquerTemps(cmdTemps);
 		moteur.setMarquerMesure(cmdMesure);
-       	
- 		//moteur.setNbTempsParMesure(4);
+       	moteur.setNbTempsParMesure(currentTParM);
  		
 		horl = new Horloge(this);
-		Click clickCmd = new Click(moteur);
-		horl.activerPeriodiquement(clickCmd, (float) 1000 / (tempo / 60)); // calculer periode en Milil second 
-	
-		// Ajouter les observateurs de ce controlleur
+		horl.activerPeriodiquement(new Click(moteur), (float) 1000 / (currentTempo / 60)); // calculer periode en Mili-second 
 
 		register((MMImpl) moteur);
 		register((Horloge) horl);
-
-		// enfin creer l'IHM
+		
 		ihm = new IHM(this);
+		register((IHM)ihm);
 
 	}
 
@@ -64,10 +64,10 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	 * Increment le temps par mesure dans la limite de [1.. MaxTParMesure=7]
 	 * */
 	public void inc() {
-		if( ! metroActive)  return;
-		tempParMesure = moteur.getNbTempsParMesure();
-		tempParMesure = ((tempParMesure) % (MaxTParMesure))  + 1;
-		ihm.setCurrentTempParM(tempParMesure);
+		if( ! metroActive)  return;  // guard when twice click on start 
+		currentTParM = moteur.getNbTempsParMesure();
+		currentTParM = getNextTParM(currentTParM,INC);
+		ihm.setCurrentTempParM(currentTParM);
 		notifyObservers();
 		
 	}
@@ -77,10 +77,9 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	 * */
 	public void dec() {
 		if( ! metroActive)  return;
-		tempParMesure = moteur.getNbTempsParMesure();
-		tempParMesure = tempParMesure -1 ;
-		if(tempParMesure == 0) { tempParMesure =1;}
-		ihm.setCurrentTempParM(tempParMesure);
+		currentTParM = moteur.getNbTempsParMesure();
+		currentTParM = getNextTParM(currentTParM, DEC);
+		ihm.setCurrentTempParM(currentTParM);
 		notifyObservers();
 	}
 
@@ -90,7 +89,7 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	 * */
 	public void start() {
 		if( metroActive)  return;
-		horl.startChrono();
+		((Horloge) horl).startChrono();
 		metroActive =true;
 	}
 
@@ -100,17 +99,17 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	 * */
 	public void stop() {
 		if( ! metroActive)  return;
-		horl.stopChrono();
+		((Horloge) horl).stopChrono();
 		metroActive =false;
 	}
 
 	public int getTempParmesure() {
-		return tempParMesure;
+		return currentTParM;
 	}
 
-	public void updateMolette(double x) {
+	public void updateMolette(double molvalue) {
 		if( ! metroActive)  return;
-		tempo = (long) ((maxTempo-minTempo)*x + minTempo);
+		currentTempo = (long) ((maxTempo-minTempo)*molvalue + minTempo);
 		notifyObservers();
 	}
 
@@ -122,19 +121,17 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 	public void marquerTemps() {
 
 		//System.out.println("  ----- marquer temps CONTROLLEUR ----- ");
-		ihm.flasherLed(1); // TODO: possible de metre design pattern command
-							// vers l'IHM
+		ihm.flasherLed(1); 						
 	}
 
 	public void marquerMesure() {
 
 		//System.out.println(" ******  marquer mesure  CONTROLLEUR  *******   ");
-		ihm.flasherLed(2); // //TODO: possible de metre design pattern command
-							// vers l'IHM
+		ihm.flasherLed(2); // 					
 	}
 
 	public long getTempo() {
-		return tempo;
+		return currentTempo;
 	}
 
 	/**
@@ -161,8 +158,28 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject ,
 		}
 	}
 
+	
 	public void update() {
 		
 	}
-
+    
+	/**
+	 * Retourne the Temps par Mesure suivant
+	 * @param val : la valeur actuelle temp par mesure
+	 * @param op : l'operation soit incrementer ou decrimenter
+	 * */
+	private int  getNextTParM(int val, int op){
+		
+		switch (op){
+			case INC: {
+				             val +=1 ; return ( (val>maxTParM) ? minTParM :  val );
+			          }
+				
+			case DEC :{
+				             val-=1;  return ( (val < minTParM) ? minTParM :  val);
+			          }
+		    default: return minTParM;
+		}
+	}
+	
 }

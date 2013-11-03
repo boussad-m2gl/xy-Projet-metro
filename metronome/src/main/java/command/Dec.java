@@ -5,7 +5,7 @@ import controleur.GestionnaireIHM;
 public class Dec   implements Command{
 
 	
-GestionnaireIHM   gesmm;
+    private GestionnaireIHM   gesmm;
 	
 	 public  Dec(GestionnaireIHM  ges){
 		gesmm = ges; 

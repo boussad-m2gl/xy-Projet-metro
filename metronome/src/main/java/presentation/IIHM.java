@@ -7,8 +7,8 @@ package presentation;
  * */
 public interface IIHM {
 
-	public void flasherLed(int idLed);
-	public void eteindreLed();
+	public void flasherLed(int numLed);
+	public void eteindreLed(int numLed);
 	public void setCurrentTempParM(int tempParMesure);
 	
 }

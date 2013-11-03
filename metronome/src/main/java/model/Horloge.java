@@ -2,22 +2,21 @@ package model;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
 import observer.Observer;
-
-import command.Click;
 import command.Command;
 import controleur.GestionnaireEvtMM;
-import controleur.GestionnaireIHM;
 
-public class Horloge  implements IHorloge, Observer {
+
+public class Horloge  implements IHorloge, Observer{
 	
     private GestionnaireEvtMM controleur;  // l'horloge connait son controlleur tous comme le moteur
 	private Command clickC;
     private long periodActiveCmd;
-	private Timer timer;
-	private Timer timer2 = new Timer();
-	private Timer timer3 = new Timer();
+	private Timer timer;   // timer pour la commande marquer temps
+	private Timer timer2 = new Timer();  // timer pour eteindre led1
+	private Timer timer3 = new Timer();  // timer pour eteindre led2
+	
+	
 	
 	public Horloge(GestionnaireEvtMM controlleur){
 	  this.controleur = controlleur;
@@ -27,7 +26,7 @@ public class Horloge  implements IHorloge, Observer {
 	
 	public Horloge(){
 		 timer = new Timer();   
-	}	
+	}
 	
     /**
      * Commence le chronometrage  pour executer une tache / command internce clickC
@@ -35,7 +34,6 @@ public class Horloge  implements IHorloge, Observer {
 	public void startChrono(){
 		 timer = new Timer();
 		 timer.schedule(new TimerTask() {
-
              @Override
              public void run() {
                  clickC.executer();
@@ -60,7 +58,7 @@ public class Horloge  implements IHorloge, Observer {
 	
 	}
     /**
-     * Permet d'activer une command apres un delais 
+     * Permet d'activer une commande aprés un delais 
      * */
 	public  void activerApresDelais( Command cmd, float delaisEnSecond) {
 		
@@ -81,10 +79,10 @@ public class Horloge  implements IHorloge, Observer {
 	}
 
     /**
-     * Mise a jour le t'etat interne de l'horloge vis avis de son controleur
+     * Mise a jour de l'etat interne de l'horloge vis a vis de son controleur
      * 
      * */
-	public void update() {
+	public void update(){
 		stopChrono();
 		periodActiveCmd =   (long) ((new Double(1000))/(new Double(controleur.getTempo())/60)); 
 		startChrono();	

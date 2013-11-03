@@ -12,12 +12,11 @@ import controleur.GestionnaireEvtMM;
  * */
 public class MMImpl implements MM, Observer {
 
+	
 	private GestionnaireEvtMM controlleur;
-
 	private MarquerTemps markT;
 	private MarquerMesure markM;
 	private int mesurecounter = 1;
-
 	private int tempParMesure=1;
 	private boolean enMarche = true;
 

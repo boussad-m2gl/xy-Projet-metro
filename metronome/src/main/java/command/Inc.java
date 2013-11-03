@@ -4,7 +4,7 @@ import controleur.GestionnaireIHM;
 
 public class Inc implements Command {
 
-     GestionnaireIHM   gesmm;
+    private GestionnaireIHM   gesmm;
 	
 	public Inc(GestionnaireIHM  ges){
 		gesmm = ges; 
@@ -12,4 +12,5 @@ public class Inc implements Command {
 	 public void executer(){
 		 gesmm.inc();
 	 }
+	 
 }

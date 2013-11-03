@@ -43,47 +43,35 @@ import controleur.GestionnaireIHM;
  * L'interface de L'IMH de l'application metronome
  * */
 
-public class IHM implements IIHM{
+public class IHM implements IIHM , Observer{
 
 	JFrame frame;
-	// JRadioButton led1;
-	// JLabel led2;
-
+	
 	LED led1, led2;
 	Player player1, player2;
 	
 	//Un slider pour le tempo
-
-	 private JSlider slider ;
-	 private JTextField txt ;
-	 private JLabel lbl1 ;
+	 private JSlider molette ;
+	 private JTextField afficheurTempo ;
+	 private JLabel afficheurTempoLab ;
 	 private JPanel panelSilder; 
 	//  temp par mesure widget 
-	 
 	 private JLabel labTmpParMesure;
 	 private JPanel panTMesure;
 	 private JPanel panNorth;
 	 private JPanel panSouth;
 	 private JPanel  panLed;
 	// command pour etteindre les leds
-    //	   LedTimer led1timer;   LedTimer led2timer;	
-	// Commandes 
-
 	 Eteindre cmdEteindreLed1, cmdEtiendreLed2;
 	 Horloge hcmd;
-	 
-	 
 	 JButton buttonInc = new JButton("INC"); 
 	 JButton buttonDec = new JButton("DEC");
 	 JTextField tempParMesur = new JTextField(3);
 	 JButton buttonStop = new JButton("STOP");
 	 JButton buttonStart = new JButton("START");
-	 
 	
 	 
-	// some attributes
-	 
-	 private int currentTempParM =1; 
+	 private int currentTempParM =2; 
      private int currentTempo = 120;
      
      private Command incrCmd, decrCmd, startCmd, stopCmd;
@@ -96,7 +84,7 @@ public class IHM implements IIHM{
          
 		controler = cont;
 		 
-		frame = new JFrame(" Je suis le Metronome ");
+		frame = new JFrame("Metronome ");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		
@@ -109,23 +97,21 @@ public class IHM implements IIHM{
 		cmdEtiendreLed2 = new Eteindre(led2);
 		hcmd =  new Horloge();
 		
-	    // On fixe les auttres commandes 
+	    // On fixe les autres commandes 
 		
-		startCmd= new Start(controler);
-		stopCmd = new Stop(controler);
-        incrCmd = new Inc(controler);
+		startCmd = new Start(controler);
+		stopCmd  = new Stop(controler);
+        incrCmd  = new Inc(controler);
         decrCmd  = new Dec(controler);
 		
 		/*************************************************************
-		                   Declaration du slider qui pour changer le tempo
+		                   Declaration du slider pour changer le tempo
 		*************************************************************/
 
-		    slider = new JSlider(JSlider.HORIZONTAL,0,10,10);//direction , min , max , current
-	         
-        
-            slider.setFont(new Font("Tahoma",Font.BOLD,12));
-	        slider.setMajorTickSpacing(2);
-	        slider.setMinorTickSpacing(1);
+            molette = new JSlider(JSlider.HORIZONTAL,0,10,10);//direction , min , max , current
+            molette.setFont(new Font("Tahoma",Font.BOLD,12));
+            molette.setMajorTickSpacing(2);
+            molette.setMinorTickSpacing(1);
      
 	      
 			Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
@@ -136,37 +122,33 @@ public class IHM implements IIHM{
 	        labelTable.put( new Integer( 8 ), new JLabel("0.8") );
 	        labelTable.put( new Integer( 10 ), new JLabel("1.0") );
 	        
-	        slider.setLabelTable( labelTable);
-	        slider.setPaintLabels(true);
-	        slider.setPaintTicks(true);
-	        slider.setPaintTrack(true);
-	        slider.setAutoscrolls(true);
-	        slider.setPreferredSize(new Dimension(250,250));
+	        molette.setLabelTable( labelTable);
+	        molette.setPaintLabels(true);
+	        molette.setPaintTicks(true);
+	        molette.setPaintTrack(true);
+	        molette.setAutoscrolls(true);
+	        molette.setPreferredSize(new Dimension(250,250));
 	       
-	        lbl1 = new JLabel("position");
-	        txt = new JTextField(4);
+	        afficheurTempoLab = new JLabel("  AFFICHEUR TEMPO ");
+	        afficheurTempo = new JTextField(7);
 		
 	        
-	        slider.addChangeListener(new ChangeListener() {
+	        molette.addChangeListener(new ChangeListener() {
 	            public void stateChanged(ChangeEvent e) {
-	                txt.setText(String.valueOf(slider.getValue()*0.1));
-	                //TODO  : remplacer par le patron de conception observer
-	                controler.updateMolette(slider.getValue()*0.1);
+	                controler.updateMolette(molette.getValue()*0.1);
 	            }
 	        });
 	        
 	       panelSilder = new JPanel();
-	      
-	       panelSilder.add(slider);
-	       panelSilder.add(lbl1);
-	       panelSilder.add(txt);
+	       panelSilder.setLayout(new BorderLayout());
+	       panelSilder.add(molette, BorderLayout.SOUTH);
+	       panelSilder.add(afficheurTempoLab, BorderLayout.NORTH);
+	       panelSilder.add(afficheurTempo, BorderLayout.CENTER);
 	       
 	       panNorth = new JPanel();
 	       panNorth.setLayout( new BorderLayout());
 	       panNorth.add(panelSilder, BorderLayout.WEST);
-		//
-	       
-	       
+	 
 	       /*************************************************************
                        Declaration du temp par mesure 
            *************************************************************/
@@ -186,7 +168,7 @@ public class IHM implements IIHM{
 		    panSouth.add(panTMesure , BorderLayout.SOUTH);
 		    
 			
-	      //association des listenrs pour les button 
+	       // Association des listeners pour les buttons
 		   
 		   buttonStart.addActionListener(
 				   new ActionListener() {
@@ -259,33 +241,38 @@ public class IHM implements IIHM{
 
     public void setCurrentTempo(int currentTempo) {
 	 		this.currentTempo = currentTempo;
+	 		afficheurTempo.setText(String.valueOf(this.currentTempo));
     }
 	 
-   public void flasherLed(int idLed) {
+   public void flasherLed(int numLed) {
 
-		switch (idLed) {
+		switch (numLed) {
 		case 1: {
-			led1.setVisible(true);
-			hcmd.activerApresDelais(cmdEteindreLed1, 200);
-			//player1.play("A");
-		}
-			;
-			break;
+				 led1.flasher();
+				 hcmd.activerApresDelais(cmdEteindreLed1, 200);
+				 //player1.play("A");
+	  	        }; break;
 
 		case 2: {
-			led2.setVisible(true);  
-			hcmd.activerApresDelais(cmdEtiendreLed2, 200);
-			//player2.play("B");
-		}
-			;
-			break;
+				 led2.flasher();  
+				 hcmd.activerApresDelais(cmdEtiendreLed2, 200);
+				 //player2.play("B");
+		        }; break;
 		default:
 			;
 		}
 	}
 
-	public void eteindreLed() {
-		// TODO Auto-generated method stub
+	public void eteindreLed(int numLed) {
+		switch (numLed){
+		   case 1 : led1.eteindre(); break;
+		   case 2: led2.eteindre();
+		}
+	}
+	
+	public void update(){
+		afficheurTempo.setText(String.valueOf(controler.getTempo()));
+		
 	}
 
 }
