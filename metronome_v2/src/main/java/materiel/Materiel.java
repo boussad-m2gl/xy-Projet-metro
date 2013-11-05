@@ -2,28 +2,18 @@ package materiel;
 
 import model.Horloge;
 
-public class Materiel {
+public interface Materiel {
 
 	// TODO Finish the return values
 
-	public static Horloge getHolorge() {
-		return null;
-	}
+	public Horloge getHolorge();
 
-	public static Clavier getClavier() {
-		return null;
-	}
+	public Clavier getClavier();
 
-	public static Molette Molette() {
-		return null;
-	}
+	public Molette Molette();
 
-	public static EmetteurSonore EmetteurSonore() {
-		return null;
-	}
+	public EmetteurSonore EmetteurSonore();
 
-	public static Afficheur getAfficheur() {
-		return null;
-	}
+	public Afficheur getAfficheur();
 
 }
