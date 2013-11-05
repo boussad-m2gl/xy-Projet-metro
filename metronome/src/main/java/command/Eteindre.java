@@ -2,8 +2,10 @@ package command;
 
 import component.LED;
 
-import presentation.IIHM;
 
+/**
+ * La commande Eteindre 
+ * */
 public class Eteindre  implements Command {
 
 	private LED  led;

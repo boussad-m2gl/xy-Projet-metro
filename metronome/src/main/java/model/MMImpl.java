@@ -13,19 +13,17 @@ import controleur.GestionnaireEvtMM;
  * */
 public class MMImpl implements MM, Observer {
 
-	
 	private GestionnaireEvtMM controlleur;
 	private MarquerTemps markT;
 	private MarquerMesure markM;
 	private int mesurecounter = 1;
-	private int tempParMesure=1;
+	private int tempParMesure = 1;
 	private boolean enMarche = false;
-    // Tempo
+	// Tempo
 	private long maxTempo = Config.MaxTempo;
-	private long minTempo = Config.MinTempo; 
+	private long minTempo = Config.MinTempo;
 	private long currentTempo = maxTempo;
-	
-	
+
 	public MMImpl(GestionnaireEvtMM controlleur) {
 		this.controlleur = controlleur;
 	}
@@ -88,7 +86,7 @@ public class MMImpl implements MM, Observer {
 	 * */
 	public void update() {
 		tempParMesure = controlleur.getTempParmesure();
-		mesurecounter =1;
+		mesurecounter = 1;
 	}
 
 	public long getTempo() {
@@ -97,10 +95,8 @@ public class MMImpl implements MM, Observer {
 
 	public void setTempo(float modeletValue) {
 
-		currentTempo = (long) ((maxTempo-minTempo)* modeletValue + minTempo);
+		currentTempo = (long) ((maxTempo - minTempo) * modeletValue + minTempo);
 		controlleur.updateTempo(currentTempo);
 	}
-
-	
 
 }

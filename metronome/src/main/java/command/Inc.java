@@ -2,6 +2,11 @@ package command;
 
 import controleur.GestionnaireIHM;
 
+
+
+/**
+ * La commande  Incrementer 
+ * */
 public class Inc implements Command {
 
     private GestionnaireIHM   gesmm;

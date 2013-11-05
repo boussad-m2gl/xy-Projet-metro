@@ -1,5 +1,9 @@
 package controleur;
 
+
+/**
+ *  Gestion des evenements de l'IHM
+ * */
 public interface GestionnaireIHM {
 
 	public void updateMolette(double d);

@@ -1,5 +1,8 @@
 package controleur;
 
+/**
+ *  Gestion des evenements du moteur 
+ * */
 public interface GestionnaireEvtMM {
 	
 	public void marquerTemps();

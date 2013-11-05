@@ -5,7 +5,7 @@ import controleur.Controleur;
 
 /**
  * Main Class pour lancer le metronome
- * @author me
+ * @author 
  * @version 1.0
  * 
  * */
@@ -16,8 +16,8 @@ public class AppliMetronome {
 		 
 		 System.out.println(" Lancement du metronome ..... ");
 		 Controleur controleur = new Controleur();
-
 		 // controleur.start();	    
 	 }
+	 
 	 
 }
