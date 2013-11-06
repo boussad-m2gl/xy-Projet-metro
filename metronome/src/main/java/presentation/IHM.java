@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jfugue.Player;
+//import org.jfugue.Player;
 
 import observer.Observer;
 import observer.Subject;
@@ -37,18 +37,19 @@ import command.Inc;
 import command.Start;
 import command.Stop;
 import component.LED;
+import controleur.Controleur;
 import controleur.GestionnaireIHM;
 
 /**
  * L'interface de L'IMH de l'application metronome
  * */
 
-public class IHM implements IIHM, Observer {
+public class IHM implements IIHM {
 
 	JFrame frame;
 
 	LED led1, led2;
-	Player player1, player2;
+	//Player player1, player2;
 
 	// Un slider pour le tempo
 	private JSlider molette;
@@ -76,7 +77,14 @@ public class IHM implements IIHM, Observer {
 	private Command incrCmd, decrCmd, startCmd, stopCmd;
 	private GestionnaireIHM controler;
 
-	public IHM(GestionnaireIHM cont) {
+	public IHM(){
+		
+	}
+	
+	public void  setControleur(Controleur cont){
+		 configure(cont);
+	}
+	private void configure(GestionnaireIHM cont) {
 
 		controler = cont;
 
@@ -88,8 +96,8 @@ public class IHM implements IIHM, Observer {
 		led1.setColor(Color.orange);
 		led2 = new LED();
 		led2.setColor(Color.red);
-		player1 = new Player();
-		player2 = new Player();
+		//player1 = new Player();
+		//player2 = new Player();
 
 		cmdEteindreLed1 = new Eteindre(led1);
 		cmdEtiendreLed2 = new Eteindre(led2);

@@ -13,10 +13,10 @@ import materiel.Clavier;
 
 public class ClavierImpl extends JPanel implements Clavier {
 
-	private final int BTNSTART = 1;
-	private final int BTNSTOP = 2;
-	private final int BTNINC = 3;
-	private final int BTNDEC = 4;
+	public  static final int BTNSTART = 1;
+	public static final int BTNSTOP = 2;
+	public static final int BTNINC = 3;
+	public static final int BTNDEC = 4;
 
 	// quatre bouton
 
@@ -97,7 +97,7 @@ public class ClavierImpl extends JPanel implements Clavier {
 		});
 	}
 
-	public boolean touchePresse(int key) throws Exception {
+	public boolean touchePresse(int key)  {
 
 		switch (key) {
 
@@ -110,12 +110,12 @@ public class ClavierImpl extends JPanel implements Clavier {
 		case BTNDEC:
 			return decActive;
 		default:
-			throw new Exception(key + " is not correct key.");
+			return false;
 		}
 
 	}
 	
-	public void resetTouche(int key) throws Exception {
+	public void resetTouche(int key){
 
 		switch (key) {
 
@@ -128,7 +128,7 @@ public class ClavierImpl extends JPanel implements Clavier {
 		case BTNDEC:
 			 decActive = false; break;
 		default:
-			throw new Exception(key + " is not correct key.");
+			break;
 		}
 
 	}

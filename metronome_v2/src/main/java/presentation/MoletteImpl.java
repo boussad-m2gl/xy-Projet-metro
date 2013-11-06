@@ -17,6 +17,7 @@ import materiel.Molette;
 
 public class MoletteImpl extends JPanel implements Molette {
 
+	private static final int BTNMOL = 5;
 	// Un slider pour le tempo
 	private JSlider molette;
 
@@ -75,9 +76,14 @@ public class MoletteImpl extends JPanel implements Molette {
 		});
 
 	}
-
+    public boolean getChanged(){
+    	return hasChanged;
+    }
+   
 	public float getPosition() {
-		return 0;
+		return value;
 	}
-
+   public void resetChanged(){
+	   hasChanged = false;
+   }
 }

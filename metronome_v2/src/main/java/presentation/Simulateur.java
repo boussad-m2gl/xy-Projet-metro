@@ -28,16 +28,18 @@ public class Simulateur extends JFrame implements Materiel {
 		this.getContentPane().add((Component) molette, BorderLayout.CENTER);
 		this.getContentPane().add((Component) clavier, BorderLayout.SOUTH);
 
+		setTitle("Metronome V2");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(500, 500));
 		setSize(new Dimension(500, 500));
 		setVisible(true);
 		pack();
+		
 	}
 
 	public static void main(String[] args) {
 		Simulateur ihmv2 = new Simulateur();
-		ihmv2.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+		
 	}
 
 	public Horloge getHolorge() {
@@ -49,7 +51,7 @@ public class Simulateur extends JFrame implements Materiel {
 		return clavier;
 	}
 
-	public materiel.Molette Molette() {
+	public materiel.Molette getMolette() {
 
 		return molette;
 	}

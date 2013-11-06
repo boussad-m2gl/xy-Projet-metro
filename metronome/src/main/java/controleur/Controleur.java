@@ -2,18 +2,14 @@ package controleur;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import observer.Observer;
 import observer.Subject;
-
 import model.Horloge;
 import model.IHorloge;
 import model.MM;
 import model.MMImpl;
 import presentation.Config;
-import presentation.IHM;
 import presentation.IIHM;
-
 import command.Click;
 import command.Command;
 import command.MarquerMesure;
@@ -28,7 +24,7 @@ import command.MarquerTemps;
 public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject {
 
 	private MM moteur;
-	private IIHM ihm;
+	protected IIHM ihm;
 	private IHorloge horl;
 	private Command cmdTemps;
 	private Command cmdMesure;
@@ -43,7 +39,9 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject {
 	private final int INC = 1;
 	private final int DEC = 2;
 
-	public Controleur() {
+
+	
+	public Controleur(IIHM  ihmInterface) {
 
 		cmdTemps = new MarquerTemps(this);
 		cmdMesure = new MarquerMesure(this);
@@ -60,9 +58,9 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject {
 
 		register((MMImpl) moteur);
 		register((Horloge) horl);
-
-		ihm = new IHM(this);
-		register((IHM) ihm);
+        this.ihm = ihmInterface;  
+		ihm.setControleur(this);
+		register(ihmInterface);
 
 	}
 

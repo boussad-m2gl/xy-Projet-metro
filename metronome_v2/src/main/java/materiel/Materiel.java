@@ -10,7 +10,7 @@ public interface Materiel {
 
 	public Clavier getClavier();
 
-	public Molette Molette();
+	public Molette getMolette();
 
 	public EmetteurSonore EmetteurSonore();
 

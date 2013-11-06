@@ -8,7 +8,7 @@ import controleur.GestionnaireEvtMM;
 
 
 /**
- * Horloge : qui composant qui genere des signaux 
+ * Horloge : qui est le composant qui genere des signaux 
  * On programme des taches est seront exécutés 
  * 
  * */
