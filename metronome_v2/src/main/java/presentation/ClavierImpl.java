@@ -1,18 +1,18 @@
 package presentation;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import materiel.Clavier;
 
 public class ClavierImpl extends JPanel implements Clavier {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	public  static final int BTNSTART = 1;
 	public static final int BTNSTOP = 2;
 	public static final int BTNINC = 3;
@@ -25,7 +25,7 @@ public class ClavierImpl extends JPanel implements Clavier {
 	private JButton btnInc;
 	private JButton btnDec;
 
-	// booleens
+	// some flags to handle the commands from the user
 	private boolean startActive;
 	private boolean stopActive;
 	private boolean incActive;
@@ -43,60 +43,49 @@ public class ClavierImpl extends JPanel implements Clavier {
 		this.add(btnInc);
 		this.add(btnDec);
 
+		// declare some listeners 
 		btnStart.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-			    System.out.println(" Mouse released ");
-			    
-			      startActive =  true;
-			      System.out.println("START is now :"+startActive);
-				//super.mouseReleased(e);
+			public void mouseReleased(MouseEvent e) {  // active on rasing front
+			      startActive =  true;  // Rise the flag
 			}
 
 		});
 		
-		btnStop.addMouseListener(new MouseAdapter() {
+		btnStop.addMouseListener(new MouseAdapter() { // active on rasing front
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-			    System.out.println(" Mouse released ");
-			    
-			      stopActive =  true;
-			   
-				//super.mouseReleased(e);
+			      stopActive =  true; // flag Up
 			}
 
 		});
 	
 		
-		btnInc.addMouseListener(new MouseAdapter() {
+		btnInc.addMouseListener(new MouseAdapter() { // active on rasing front
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-			    System.out.println(" Mouse released ");
-			    
-			    incActive =  true;
-			 
-				//super.mouseReleased(e);
+			public void mouseReleased(MouseEvent e) { 
+			    incActive =  true;  // flag up
 			}
 
 		});
 		
-		btnDec.addMouseListener(new MouseAdapter() {
+		btnDec.addMouseListener(new MouseAdapter() { // active on rasing front
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-			    System.out.println(" Mouse released ");
-			    
-			    decActive =  true;
+			    decActive =  true;  // flag up
 
-				//super.mouseReleased(e);
 			}
 
 		});
 	}
-
+    /**
+     * @return : true weather the required button was pressed
+     * @param  : button identifier
+     * */
 	public boolean touchePresse(int key)  {
 
 		switch (key) {
@@ -115,12 +104,16 @@ public class ClavierImpl extends JPanel implements Clavier {
 
 	}
 	
+	 /**
+     *  Reset a given button , put its corresponding flag to false
+     *  @param  : button identifier
+     * */
 	public void resetTouche(int key){
 
 		switch (key) {
 
 		case BTNSTART:
-			 startActive = false; break;
+			 startActive = false; break; // put down the flag
 		case BTNSTOP:
 		       stopActive = false; break;
 		case BTNINC:
@@ -130,6 +123,6 @@ public class ClavierImpl extends JPanel implements Clavier {
 		default:
 			break;
 		}
-
 	}
+	
 }

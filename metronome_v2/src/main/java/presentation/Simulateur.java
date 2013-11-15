@@ -3,22 +3,27 @@ package presentation;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
-
 import materiel.Afficheur;
 import materiel.Clavier;
 import materiel.Materiel;
 import materiel.Molette;
-import model.Horloge;
 
+
+/**
+ * Simulateur Will simulate the Hardware
+ * 
+ * */
 public class Simulateur extends JFrame implements Materiel {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Clavier clavier;
 	private Molette molette;
 	private Afficheur afficheur;
 
 	public Simulateur() {
+		
 		clavier = new ClavierImpl();
 		molette = new MoletteImpl();
 		afficheur = new AfficheurImpl();
@@ -37,32 +42,17 @@ public class Simulateur extends JFrame implements Materiel {
 		
 	}
 
-	public static void main(String[] args) {
-		Simulateur ihmv2 = new Simulateur();
-		
-	}
-
-	public Horloge getHolorge() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public Clavier getClavier() {
 		return clavier;
 	}
 
 	public materiel.Molette getMolette() {
-
 		return molette;
 	}
 
-	public materiel.EmetteurSonore EmetteurSonore() {
-
-		return null;
-	}
 
 	public Afficheur getAfficheur() {
-
 		return afficheur;
 	}
+	
 }

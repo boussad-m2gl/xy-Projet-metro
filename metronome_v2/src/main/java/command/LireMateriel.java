@@ -17,5 +17,6 @@ public class LireMateriel  implements Command {
 	}
 	public void executer() {
 		this.adaptateurIhm.lireMateiel();
-	}	
+	}
+	
 }

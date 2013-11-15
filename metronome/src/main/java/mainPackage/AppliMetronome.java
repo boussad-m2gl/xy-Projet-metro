@@ -6,6 +6,10 @@ import controleur.Controleur;
 
 /**
  * AppliMetronome : Class Qui permet de lancer la version v1 du metronome
+ *
+ * @author Boussad GHEDAMSI
+ * @author 2: ChenCheng Pu
+ * @author 3: Houda Argani
  * 
  * */
 public class AppliMetronome {

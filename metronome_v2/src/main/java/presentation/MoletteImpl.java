@@ -5,11 +5,9 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -17,14 +15,16 @@ import materiel.Molette;
 
 public class MoletteImpl extends JPanel implements Molette {
 
-	private static final int BTNMOL = 5;
-	// Un slider pour le tempo
-	private JSlider molette;
-
-	// boolea si actif
+	private static final long serialVersionUID = 1L;
+    
+	// molette flag
 	private boolean hasChanged;
 	private float value;
 
+	// Un slider pour le tempo
+	private JSlider molette;
+
+	
 	public MoletteImpl() {
 
 		molette = new JSlider(JSlider.HORIZONTAL, 0, 10, 10);// direction , min
@@ -61,8 +61,6 @@ public class MoletteImpl extends JPanel implements Molette {
 
 				hasChanged = true;
 				value = molette.getValue() * 0.1f;
-				System.out.println("Value has chaged to the new value :"
-						+ value);
 			}
 
 		}
@@ -76,14 +74,16 @@ public class MoletteImpl extends JPanel implements Molette {
 		});
 
 	}
-    public boolean getChanged(){
-    	return hasChanged;
-    }
-   
+
+	public boolean getChanged() {
+		return hasChanged;
+	}
+
 	public float getPosition() {
 		return value;
 	}
-   public void resetChanged(){
-	   hasChanged = false;
-   }
+
+	public void resetChanged() {
+		hasChanged = false;
+	}
 }

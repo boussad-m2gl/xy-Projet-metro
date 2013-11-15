@@ -7,29 +7,16 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Hashtable;
-
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-//import org.jfugue.Player;
-
-import observer.Observer;
-import observer.Subject;
-
 import model.Horloge;
-
 import command.Command;
 import command.Dec;
 import command.Eteindre;
@@ -39,6 +26,7 @@ import command.Stop;
 import component.LED;
 import controleur.Controleur;
 import controleur.GestionnaireIHM;
+//import org.jfugue.Player;
 
 /**
  * L'interface de L'IMH de l'application metronome
@@ -87,18 +75,13 @@ public class IHM implements IIHM {
 	private void configure(GestionnaireIHM cont) {
 
 		controler = cont;
-
 		frame = new JFrame("Metronome -V1 ");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
-
 		led1 = new LED();
 		led1.setColor(Color.orange);
 		led2 = new LED();
 		led2.setColor(Color.red);
-		//player1 = new Player();
-		//player2 = new Player();
-
 		cmdEteindreLed1 = new Eteindre(led1);
 		cmdEtiendreLed2 = new Eteindre(led2);
 		hcmd = new Horloge();
@@ -175,7 +158,7 @@ public class IHM implements IIHM {
 		panSouth.add(buttonStop, BorderLayout.SOUTH);
 		panSouth.add(panTMesure, BorderLayout.SOUTH);
 
-		// Association des listeners pour les buttons
+		// Association des listeners pour les bouttons
 
 		buttonStart.addActionListener(new ActionListener() {
 
@@ -214,14 +197,13 @@ public class IHM implements IIHM {
 		panLed.add(led2, BorderLayout.SOUTH);
 
 		panNorth.add(panLed, BorderLayout.EAST);
+		
 		frame.add(panNorth, BorderLayout.NORTH);
 		frame.add(panSouth, BorderLayout.CENTER);
-
 		frame.setPreferredSize(new Dimension(800, 600));
 		frame.setResizable(false);
 		frame.pack();
 		frame.setVisible(true);
-
 	}
 
 	public int getCurrentTempParM() {
@@ -247,7 +229,6 @@ public class IHM implements IIHM {
 		case 1: {
 			led1.flasher();
 			hcmd.activerApresDelais(cmdEteindreLed1, 200);
-			// player1.play("A");
 		}
 			;
 			break;
@@ -255,7 +236,6 @@ public class IHM implements IIHM {
 		case 2: {
 			led2.flasher();
 			hcmd.activerApresDelais(cmdEtiendreLed2, 200);
-			// player2.play("B");
 		}
 			;
 			break;
