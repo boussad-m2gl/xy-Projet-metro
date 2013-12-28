@@ -24,6 +24,8 @@ public class MMImpl implements MM, Observer {
 	private long minTempo = Config.MinTempo;
 	private long currentTempo = maxTempo;
 
+	public MMImpl(){}
+	
 	public MMImpl(GestionnaireEvtMM controlleur) {
 		this.controlleur = controlleur;
 	}

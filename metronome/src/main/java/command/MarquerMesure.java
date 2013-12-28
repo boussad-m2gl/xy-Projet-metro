@@ -11,6 +11,8 @@ public class MarquerMesure  implements Command  {
 	
   private GestionnaireEvtMM gsmm;
 	  
+   public MarquerMesure(){}
+  
 	public MarquerMesure(GestionnaireEvtMM c) {
 		gsmm = c;
 	}

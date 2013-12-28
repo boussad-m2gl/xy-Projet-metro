@@ -13,7 +13,7 @@ import materiel.Afficheur;
 
 /**
  * Implemention of the Afficheur Interface This class will contain: 2 leds , a
- * Tempo displayer and a Temp par mesure displayer
+ * Tempo displayer and a Temp per mesure displayer
  * */
 public class AfficheurImpl extends JPanel implements Afficheur {
 

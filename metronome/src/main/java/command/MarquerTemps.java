@@ -12,6 +12,8 @@ public class MarquerTemps implements Command {
 	
 	private GestionnaireEvtMM gstmm;
 
+	public MarquerTemps(){}
+	
 	public MarquerTemps(GestionnaireEvtMM c) {
 		gstmm = c;
 	}

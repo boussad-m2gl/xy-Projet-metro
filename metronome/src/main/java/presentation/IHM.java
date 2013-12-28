@@ -26,7 +26,7 @@ import command.Stop;
 import component.LED;
 import controleur.Controleur;
 import controleur.GestionnaireIHM;
-//import org.jfugue.Player;
+
 
 /**
  * L'interface de L'IMH de l'application metronome
@@ -37,8 +37,7 @@ public class IHM implements IIHM {
 	JFrame frame;
 
 	LED led1, led2;
-	//Player player1, player2;
-
+	
 	// Un slider pour le tempo
 	private JSlider molette;
 	private JTextField afficheurTempo;

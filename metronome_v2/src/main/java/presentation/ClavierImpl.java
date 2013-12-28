@@ -125,4 +125,25 @@ public class ClavierImpl extends JPanel implements Clavier {
 		}
 	}
 	
+	 /**
+     *  set a given button , put its corresponding flag to false
+     *  @param  : button identifier
+     * */
+	public void setTouche(int key){
+
+		switch (key) {
+
+		case BTNSTART:
+			 startActive = true; break; // put down the flag
+		case BTNSTOP:
+		       stopActive = true; break;
+		case BTNINC:
+			 incActive = true; break;
+		case BTNDEC:
+			 decActive = true; break;
+		default:
+			break;
+		}
+	}
+	
 }

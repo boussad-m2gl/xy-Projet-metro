@@ -3,4 +3,24 @@
   <groupId>fr.istic.m2.aoc</groupId>
   <artifactId>metronome_v2</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  
+  	   
+  <dependencies>
+      <dependency>
+	       <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>4.8.1</version>
+	      <scope>test</scope>
+	  </dependency>
+	  
+  <dependency>
+	 <groupId>org.mockito</groupId>
+	 <artifactId>mockito-all</artifactId>
+	 <version>1.8.4</version>
+  </dependency>
+	 
+  </dependencies>
+  
+  
 </project>

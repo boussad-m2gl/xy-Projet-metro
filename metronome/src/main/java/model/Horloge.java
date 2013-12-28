@@ -9,7 +9,7 @@ import controleur.GestionnaireEvtMM;
 
 /**
  * Horloge : qui est le composant qui genere des signaux 
- * On programme des taches est seront exécutés 
+ * On programme des taches qui seront exécutés 
  * 
  * */
 public class Horloge implements IHorloge, Observer {

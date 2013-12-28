@@ -36,6 +36,8 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject {
 
 	Collection<Observer> obsControlleur = new ArrayList<Observer>();
 
+	
+
 	private final int INC = 1;
 	private final int DEC = 2;
 
@@ -63,6 +65,30 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject {
 		register(ihmInterface);
 
 	}
+	
+	public Controleur(IIHM  ihmInterface, MMImpl mot) {
+
+		cmdTemps = new MarquerTemps(this);
+		cmdMesure = new MarquerMesure(this);
+
+		moteur = mot; mot.setGestionnaireEvtMM(this);
+		moteur.setMarquerTemps(cmdTemps);
+		moteur.setMarquerMesure(cmdMesure);
+		moteur.setNbTempsParMesure(currentTParM);
+		currentTempo = moteur.getTempo();
+		horl = new Horloge(this);
+		horl.activerPeriodiquement(new Click(moteur),
+				(float) 1000 / (moteur.getTempo() / 60)); // calculer periode en
+															// Mili-second
+
+		register((MMImpl) moteur);
+		register((Horloge) horl);
+        this.ihm = ihmInterface;  
+		ihm.setControleur(this);
+		register(ihmInterface);
+
+	}
+
 
 	/**
 	 * Increment le temps par mesure dans la limite de [1.. MaxTParMesure=7]
@@ -180,7 +206,7 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject {
 	 * @param op
 	 *            : l'operation soit incrementer ou decrimenter
 	 * */
-	private int getNextTParM(int val, int op) {
+	public int getNextTParM(int val, int op) {
 
 		switch (op) {
 		case INC: {
@@ -195,6 +221,14 @@ public class Controleur implements GestionnaireEvtMM, GestionnaireIHM, Subject {
 		default:
 			return minTParM;
 		}
+	}
+	
+	public Collection<Observer> getObsControlleur() {
+		return obsControlleur;
+	}
+
+	public void setObsControlleur(Collection<Observer> obsControlleur) {
+		this.obsControlleur = obsControlleur;
 	}
 
 }
